@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
         if(hit.transform.tag=="Moveable")
         {
             Rigidbody rBody = hit.collider.attachedRigidbody;
-            if(rBody!=null)
+            if(rBody!=null && rBody.isKinematic==false)
             {
                 Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
                 rBody.velocity = pushDir * _pushPower;
