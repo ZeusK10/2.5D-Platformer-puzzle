@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private Vector3 velocity, direction;
     private bool _canWallJump;
     private Vector3 wallSurfaceNormal;
+    private float _pushPower = 2.0f;
 
 
     // Start is called before the first frame update
@@ -80,6 +81,16 @@ public class Player : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if(hit.transform.tag=="Moveable")
+        {
+            Rigidbody rBody = hit.collider.attachedRigidbody;
+            if(rBody!=null)
+            {
+                Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
+                rBody.velocity = pushDir * _pushPower;
+            }
+        }
+
         if(_controller.isGrounded==false && hit.transform.tag=="Wall")
         {
             wallSurfaceNormal = hit.normal;
